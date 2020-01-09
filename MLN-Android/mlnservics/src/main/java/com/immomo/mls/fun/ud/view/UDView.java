@@ -209,6 +209,11 @@ public abstract class UDView<V extends View> extends JavaUserdata<V> implements 
 
     protected boolean hasNineImage = false;//是否添加点9图
 
+    private int mPaddingLeft;
+    private int mPaddingTop;
+    private int mPaddingRight;
+    private int mPaddingBottom;
+
     protected final @NonNull
     V view;
 
@@ -822,11 +827,16 @@ public abstract class UDView<V extends View> extends JavaUserdata<V> implements 
      */
     @LuaApiUsed
     public LuaValue[] padding(LuaValue[] p) {
+        mPaddingLeft = DimenUtil.dpiToPx((float) p[3].toDouble());
+        mPaddingTop = DimenUtil.dpiToPx((float) p[0].toDouble());
+        mPaddingRight = DimenUtil.dpiToPx((float) p[1].toDouble());
+        mPaddingBottom = DimenUtil.dpiToPx((float) p[2].toDouble());
+
         view.setPadding(
-                DimenUtil.dpiToPx((float) p[3].toDouble()),
-                DimenUtil.dpiToPx((float) p[0].toDouble()),
-                DimenUtil.dpiToPx((float) p[1].toDouble()),
-                DimenUtil.dpiToPx((float) p[2].toDouble()));
+                mPaddingLeft,
+                mPaddingTop,
+                mPaddingRight,
+                mPaddingBottom);
         return null;
     }
 
@@ -1835,6 +1845,22 @@ public abstract class UDView<V extends View> extends JavaUserdata<V> implements 
         if (fun != null) {
             view.setOnTouchListener(touchListener);
         }
+    }
+
+    public int getPaddingLeft() {
+        return mPaddingLeft;
+    }
+
+    public int getPaddingTop() {
+        return mPaddingTop;
+    }
+
+    public int getPaddingRight() {
+        return mPaddingRight;
+    }
+
+    public int getPaddingBottom() {
+        return mPaddingBottom;
     }
 
     /**
